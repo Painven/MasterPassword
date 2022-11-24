@@ -1,0 +1,149 @@
+﻿<Window x:Class="MasterPasswordDesktop.Views.EditDataLineWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:MasterPasswordDesktop.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:beh="clr-namespace:MasterPasswordDesktop.Infrastructure.Behaviors"
+        xmlns:fa="http://schemas.microsoft.com/winfx/2006/xaml/composite-font"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        x:Name="editWindow"
+        WindowStartupLocation="CenterScreen"       
+        mc:Ignorable="d"
+        Background="{StaticResource SecondBackgroundBrush}"
+        Height="509.415" Width="544.969">
+    <i:Interaction.Behaviors>
+        <beh:DragWindowBehavior/>
+    </i:Interaction.Behaviors>
+    <Window.DataContext>
+        <vm:EditDataLineWindowViewModel></vm:EditDataLineWindowViewModel>
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=editWindow}"/>
+        <KeyBinding Key="DbeEnterWordRegisterMode" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=editWindow}"/>
+    </Window.InputBindings>
+    <Border Style="{StaticResource WindowBorderStyle}" Padding="20 10">
+        <DockPanel LastChildFill="True">
+
+            <Button Command="{Binding CloseWindowCommand}" 
+                CommandParameter="{Binding ElementName=editWindow}"
+                DockPanel.Dock="Top"
+                Width="18" Height="18" FontSize="14" 
+                HorizontalAlignment="Right"
+                Style="{StaticResource CloseButtonStyle}">&#xf410;</Button>
+
+            <Label DockPanel.Dock="Top"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Center"
+               HorizontalContentAlignment="Center"
+               FontWeight="Bold"
+               Foreground="{StaticResource ActiveDataLineFieldBrush}"
+               FontSize="24"
+               Content="{Binding WindowModeCaption, FallbackValue='Добавление данных'}">
+            </Label>
+
+            <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+                <Button DockPanel.Dock="Right"
+                IsDefault="True"
+                Margin="0 10 10 10"
+                Content="Сохранить" 
+                Command="{Binding SaveCommand}" 
+                CommandParameter="{Binding ElementName=editWindow}"
+                Style="{DynamicResource SaveButtonStyle}"/>
+
+                <Button x:Name="btnLocker" 
+                    DockPanel.Dock="Left"
+                Grid.Row="0" Grid.Column="1"
+                Command="{Binding LockerStateChangeCommand}"
+                Visibility="{Binding LockerVisibility}"
+                Content="{Binding LockerIconContent}"
+                ToolTip="Разблокировать ввод данных" 
+                Width="48"
+                Foreground="Red"
+                Margin="0 4 8 0"
+                BorderBrush="Transparent"
+                Height="48" 
+                FontSize="32"
+                Style="{StaticResource ToolButtonStyle}"/>
+            </DockPanel>
+
+            <Grid Margin="10" DataContext="{Binding Item}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource DataLineFieldLabel}">Заголовок</Label>
+                <TextBox x:Name="txtLogin" Grid.Row="0" 
+                 IsReadOnly="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.IsLocked}"
+                 Grid.Column="1" 
+                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" 
+                 Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+
+                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource DataLineFieldLabel}">Логин</Label>
+                <TextBox Grid.Row="1" Grid.Column="1" 
+                 Text="{Binding Login}" 
+                 IsReadOnly="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.IsLocked}"
+                 Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource DataLineFieldLabel}">Пароль</Label>
+                <TextBox Grid.Row="2" Grid.Column="1" 
+                 Text="{Binding Password}" 
+                 IsReadOnly="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.IsLocked}"
+                 Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+
+                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource DataLineFieldLabel}">Email</Label>
+                <TextBox Grid.Row="3" Grid.Column="1" 
+                 Text="{Binding Email}" 
+                 IsReadOnly="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.IsLocked}"
+                 Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+
+                <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource DataLineFieldLabel}">Host</Label>
+                <TextBox Grid.Row="4" Grid.Column="1" 
+                 Text="{Binding Host}" 
+                 IsReadOnly="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.IsLocked}"
+                 Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+
+                <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource DataLineFieldLabel}">Телефон</Label>
+                <TextBox Grid.Row="5" Grid.Column="1" 
+                 Text="{Binding PhoneNumber}" 
+                 IsReadOnly="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.IsLocked}"
+                 Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+
+                <Label Grid.Row="6" Grid.Column="0" IsEnabled="False" Style="{StaticResource DataLineFieldLabel}">Дата последнего просмотра</Label>
+                <TextBox Grid.Row="6" Grid.Column="1" IsReadOnly="True" Text="{Binding LastViewDate, StringFormat=dd.MM.yyyy H:mm}" Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+
+                <Label Grid.Row="7" Grid.Column="0" IsEnabled="False" Style="{StaticResource DataLineFieldLabel}">Дата последнего изменения</Label>
+                <TextBox Grid.Row="7" Grid.Column="1" IsReadOnly="True" Text="{Binding EditDate, StringFormat=dd.MM.yyyy H:mm}" Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+
+                <Label Grid.Row="8" Grid.Column="0" IsEnabled="False" Style="{StaticResource DataLineFieldLabel}">Дата создания</Label>
+                <TextBox Grid.Row="8" Grid.Column="1" IsReadOnly="True" Text="{Binding CreationDate, StringFormat=dd.MM.yyyy H:mm}" Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+
+                <Separator Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2"  Height="4" HorizontalAlignment="Stretch"/>
+
+                <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource DataLineFieldLabel}">Другое</Label>
+                <TextBox Grid.Row="10" Grid.Column="1" MinHeight="50" 
+                 Text="{Binding Other}"
+                 IsReadOnly="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.IsLocked}"
+                 Style="{StaticResource DataLineFieldTextBoxStyle}"></TextBox>
+            </Grid>
+
+        </DockPanel>
+    </Border>
+</Window>

@@ -1,0 +1,29 @@
+﻿<Application x:Class="MasterPasswordDesktop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converter="clr-namespace:MasterPasswordDesktop.Infrastructure.Converters"    
+             xmlns:cmd="clr-namespace:MasterPasswordDesktop.Commands">
+    <Application.Resources>
+
+
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                
+                <ResourceDictionary>
+                    <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
+                    <converter:BoolInverseConverter x:Key="BoolInverseConverter"/>
+                    <converter:GreaterThanZeroToVisibilityConverter x:Key="GreaterThanZeroToVisibilityConverter"/>
+                    <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+                    
+                    <FontFamily x:Key="FontAwesome">/MasterPassword;component/Resources/Fonts/FontAwesome.otf#Font Awesome 5 Free Solid</FontFamily>
+                </ResourceDictionary>
+                
+                <ResourceDictionary Source="Resources/ResourceDictionaries/Brushes.xaml"/>
+                <ResourceDictionary Source="Resources/ResourceDictionaries/Styles.xaml"/>
+                <ResourceDictionary Source="Resources/ResourceDictionaries/DataTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
